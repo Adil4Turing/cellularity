@@ -1,6 +1,7 @@
 pub mod core;
 pub mod error;
 pub mod utils;
+pub mod ui;
 
 // Re-export commonly used types
 pub use core::{
