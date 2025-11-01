@@ -18,3 +18,4 @@ pub use core::{
     walled_boundary::WalledBoundary,
 };
 pub use error::{Error, Result};
+pub use ui::{ControlPanel, ControlAction};
