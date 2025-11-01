@@ -1,0 +1,39 @@
+# Rust build artifacts
+target/
+# Note: Cargo.lock should NOT be ignored - it's needed for reproducible builds
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+
+# Node modules (if any)
+node_modules/
+package-lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Debug files
+*.log
+*.pdb
+
+# Test files
+*.test
+
+# Temporary files
+tmp/
+temp/
+

@@ -1,0 +1,43 @@
+services:
+  cellularity:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cellularity:latest
+    container_name: cellularity-simulator
+    # Remove stdin_open and tty if running in non-interactive mode
+    stdin_open: true
+    tty: true
+    environment:
+      # Forward host display. One of these will be set on host.
+      - DISPLAY=${DISPLAY}
+      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY}
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+      # Avoid some X11 shared memory issues
+      - QT_X11_NO_MITSHM=1
+      # Prefer X11 to avoid missing Wayland libs or mismatched protocols
+      - WINIT_UNIX_BACKEND=x11
+      # Use Mesa software rendering if no hardware GL is available in container
+      - LIBGL_ALWAYS_SOFTWARE=1
+      - MESA_LOADER_DRIVER_OVERRIDE=swrast
+    volumes:
+      # X11 socket (for Xorg or XWayland)
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # Wayland runtime dir (if using Wayland)
+      - ${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR}
+    devices:
+      # Optional: GPU acceleration if available
+      - /dev/dri:/dev/dri
+    user: "${UID}:${GID}"
+    # Optional: allow network access to host X server without extra setup
+    # network_mode: host
+    # Uncomment if you need to mount volumes (e.g., for data persistence)
+    # volumes:
+    #   - ./data:/app/data
+    # Uncomment if you need to expose ports (for future web UI)
+    # ports:
+    #   - "8080:8080"
+    # Restart policy removed to prevent container from restarting after exit
+    # Override command if needed
+    # command: ["--help"]
+
